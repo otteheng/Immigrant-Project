@@ -1,4 +1,4 @@
-# Immigrant-Project
+# Immigrant Project
 
 Data visualization on immigration outcomes for Hispanics that will be featured on the [CALDER website](https://caldercenter.org/data-visualizations). 
 
