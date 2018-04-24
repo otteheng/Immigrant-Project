@@ -24,8 +24,7 @@ df = pd.read_csv(
     'https://raw.githubusercontent.com/otteheng/Immigrant-Project/master/Graph%202/clean_national_topstates.csv')
 
 states = list(df['state'].unique())
-outcomes = ["% less than High School diploma", "% with College Degree", "% with Health Insurance", "% Employed",
-            "% Married", "% with Children", "% of Families under the Poverty Line", "Median Individual Real Income"]
+outcomes = ["% less than High School diploma", "% with College Degree", "% with Health Insurance", "% Employed", "Median Individual Real Income"]
 
 # Organize where items will be on the page
 app.layout = html.Div([

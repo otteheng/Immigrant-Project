@@ -23,8 +23,7 @@ app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
 df = pd.read_csv(
     'https://raw.githubusercontent.com/otteheng/Immigrant-Project/master/Graph%204/clean_national_city_outcomes.csv')
 
-outcomes = ["% less than High School diploma", "% with College Degree", "% with Health Insurance", "% Employed",
-            "% Married", "% with Children", "Median Individual Real Income"]
+outcomes = ["% less than High School diploma", "% with College Degree", "% with Health Insurance", "% Employed", "Median Individual Real Income"]
 
 # Organize where items will be on the page
 app.layout = html.Div([

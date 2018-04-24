@@ -19,16 +19,16 @@ app = dash.Dash(__name__, server=server)
 
 app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"})
 
-# df = gender
+# df = append
 df = pd.read_csv(
-    'https://raw.githubusercontent.com/otteheng/Immigrant-Project/master/Graph%203/clean_national_gender.csv')
+    'https://raw.githubusercontent.com/otteheng/Immigrant-Project/master/Graph%206/clean_national_mexican_outcomes.csv?_sm_au_=iMVn4WnLFkrJ0btq')
 
 outcomes = ["% less than High School diploma", "% with College Degree", "% with Health Insurance", "% Employed", "Median Individual Real Income"]
 
 # Organize where items will be on the page
 app.layout = html.Div([
     html.H3(
-        children='Cross-Generational Differences in Hispanic Outcomes by Gender, 1994-2016',
+        children='Cross-Generational Differences between Mexican and Non-Mexican Immigrants, 1994-2016',
         style={
             'textAlign': 'center', 'fontFamily': 'Georgia'
         }
@@ -64,76 +64,64 @@ app.layout = html.Div([
 
     dash.dependencies.Output('indicator-graphic1', 'figure'),
     [dash.dependencies.Input('outcome-id', 'value')])
-def outcome_male(outcome_id):
-    dff = df[['year', 'wbhao_igen', 'female', outcome_id]]
-    dff = dff[(dff.female == 0)]
+def outcome_mexican(outcome_id):
+    dff = df[['year', 'wbhao_igen', outcome_id]]
+    dff = dff[(dff.wbhao_igen == 'Mexican 1st Generation') | (dff.wbhao_igen == 'Mexican 2nd Generation')]
 
     lines = {}
     data = []
 
     m_max = dff[outcome_id].max()
     m_min = dff[outcome_id].min()
-    f = df[['year', 'wbhao_igen', 'female', outcome_id]]
-    f = f[(f.female == 1)]
-    f_max = f[outcome_id].max()
-    f_min = f[outcome_id].min()
-    if m_max > f_max:
+    n = df[['year', 'wbhao_igen', outcome_id]]
+    n = n[(n.wbhao_igen == 'Non-Mexican 1st Generation') | (n.wbhao_igen == 'Non-Mexican 2nd Generation')]
+    n_max = n[outcome_id].max()
+    n_min = n[outcome_id].min()
+    if m_max == n_max:
         df_max = m_max
-    elif m_max < f_max:
-        df_max = f_max
-    if m_min > f_min:
-        df_min = f_min
-    elif m_min < f_min:
+    if m_min == n_min:
+        df_min = m_min
+    if m_max > n_max:
+        df_max = m_max
+    elif m_max < n_max:
+        df_max = n_max
+    if m_min > n_min:
+        df_min = n_min
+    elif m_min < n_min:
         df_min = m_min
     if df_min < 0.05:
         df_min = 0
-
     y_axis = {'title': '{0}'.format(outcome_id),
               'hoverformat': ',.2f',
               'range': [df_min, df_max]}
+
     legends = {'orientation': 'h', 'xanchor': 'center', 'x': '0.5', 'y': '-0.22'}
 
-    # Show three lines for each output
-    generation = ['White All', 'Hispanic All', 'Hispanic 1st Generation', 'Hispanic 2nd Generation',
-                  'Hispanic 3rd Generation']
-    for gen in generation:
+    generations = list(dff.wbhao_igen.unique())
+    for gen in generations:
         if '1st' in gen:
             lines = dict(
                 color=("#6b6ecf"),
-                width=2,
-                dash='dash')
+                width=3)
         if '2nd' in gen:
             lines = dict(
                 color=("#80b1d3"),
-                width=2,
-                dash='dash')
-        if '3rd' in gen:
-            lines = dict(
-                color=("#fdb462"),
-                width=2,
-                dash='dash')
-        if 'White All' in gen:
-            lines = dict(
-                color=("#333333"),
-                width=3)
-        if 'Hispanic All' in gen:
-            lines = dict(
-                color=("#fb8072"),
                 width=3)
         trace = go.Scatter(
-            x=dff[(dff.wbhao_igen == gen)]['year'],
-            y=dff[(dff.wbhao_igen == gen)][outcome_id],
+            x=dff[dff.wbhao_igen == gen]['year'],
+            y=dff[dff.wbhao_igen == gen][outcome_id],
             mode='lines',
             name=gen,
             line=lines,
             opacity=0.8
         )
+
         data.append(trace)
 
     return {
         'data': data,
         'layout': go.Layout(
-            title='Male',
+            title='Mexican',
             titlefont=dict(
                 family='Georgia'),
             xaxis={'title': 'Year'},
@@ -147,27 +135,31 @@ def outcome_male(outcome_id):
 
     dash.dependencies.Output('indicator-graphic2', 'figure'),
     [dash.dependencies.Input('outcome-id', 'value')])
-def outcome_female(outcome_id):
-    dff = df[['year', 'wbhao_igen', 'female', outcome_id]]
-    dff = dff[(dff.female == 1)]
+def outcome_nonmexican(outcome_id):
+    dff = df[['year', 'wbhao_igen', outcome_id]]
+    dff = dff[(dff.wbhao_igen == 'Non-Mexican 1st Generation') | (dff.wbhao_igen == 'Non-Mexican 2nd Generation')]
 
     lines = {}
     data = []
 
-    f_max = dff[outcome_id].max()
-    f_min = dff[outcome_id].min()
-    m = df[['year', 'wbhao_igen', 'female', outcome_id]]
-    m = m[(m.female == 0)]
+    n_max = dff[outcome_id].max()
+    n_min = dff[outcome_id].min()
+    m = df[['year', 'wbhao_igen', outcome_id]]
+    m = m[(m.wbhao_igen == 'Mexican 1st Generation') | (m.wbhao_igen == 'Mexican 2nd Generation')]
     m_max = m[outcome_id].max()
     m_min = m[outcome_id].min()
-    if f_max > m_max:
-        df_max = f_max
-    elif f_max < m_max:
+    if m_max == n_max:
         df_max = m_max
-    if f_min > m_min:
+    if m_min == n_min:
         df_min = m_min
-    elif f_min < m_min:
-        df_min = f_min
+    if n_max > m_max:
+        df_max = n_max
+    elif n_max < m_max:
+        df_max = m_max
+    if n_min > m_min:
+        df_min = m_min
+    elif n_min < m_min:
+        df_min = n_min
     if df_min < 0.05:
         df_min = 0
 
@@ -176,47 +168,31 @@ def outcome_female(outcome_id):
               'range': [df_min, df_max]}
     legends = {'orientation': 'h', 'xanchor': 'center', 'x': '0.5', 'y': '-0.22'}
 
-    # Show three lines for each output
-    generation = ['White All', 'Hispanic All', 'Hispanic 1st Generation', 'Hispanic 2nd Generation',
-                  'Hispanic 3rd Generation']
-    for gen in generation:
+    generations = list(dff.wbhao_igen.unique())
+    for gen in generations:
         if '1st' in gen:
             lines = dict(
                 color=("#6b6ecf"),
-                width=2,
-                dash='dash')
+                width=3)
         if '2nd' in gen:
             lines = dict(
                 color=("#80b1d3"),
-                width=2,
-                dash='dash')
-        if '3rd' in gen:
-            lines = dict(
-                color=("#fdb462"),
-                width=2,
-                dash='dash')
-        if 'White All' in gen:
-            lines = dict(
-                color=("#333333"),
-                width=3)
-        if 'Hispanic All' in gen:
-            lines = dict(
-                color=("#fb8072"),
                 width=3)
         trace = go.Scatter(
-            x=dff[(dff.wbhao_igen == gen)]['year'],
-            y=dff[(dff.wbhao_igen == gen)][outcome_id],
+            x=dff[dff.wbhao_igen == gen]['year'],
+            y=dff[dff.wbhao_igen == gen][outcome_id],
             mode='lines',
             name=gen,
             line=lines,
             opacity=0.8
         )
+
         data.append(trace)
 
     return {
         'data': data,
         'layout': go.Layout(
-            title='Female',
+            title='Non-Mexican',
             titlefont=dict(
                 family='Georgia'),
             xaxis={'title': 'Year'},
