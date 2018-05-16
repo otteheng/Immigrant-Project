@@ -28,7 +28,7 @@ outcomes = ["% less than High School diploma", "% with College Degree", "% with 
 # Organize where items will be on the page
 app.layout = html.Div([
     html.H3(
-        children='Cross-Generational Differences in Hispanic Outcomes by Gender, 1994-2016',
+        children='Gender Breakdown in Cross-Generational Differences among Hispanics, 1994-2016',
         style={
             'textAlign': 'center', 'fontFamily': 'Georgia'
         }
@@ -40,7 +40,7 @@ app.layout = html.Div([
             dcc.Dropdown(
                 id='outcome-id',
                 options=[{'label': i, 'value': i} for i in outcomes],
-                value='% less than High School diploma')
+                value='% with College Degree')
         ], style={'width': '50%', 'textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),
     ]),
     html.Div([

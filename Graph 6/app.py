@@ -28,7 +28,7 @@ outcomes = ["% less than High School diploma", "% with College Degree", "% with 
 # Organize where items will be on the page
 app.layout = html.Div([
     html.H3(
-        children='Cross-Generational Differences between Mexican and Non-Mexican Immigrants, 1994-2016',
+        children='Differences in Educational Attainment between First and Second Generation Hispanic Immigrants, 1994-2016, by Mexican Origin',
         style={
             'textAlign': 'center', 'fontFamily': 'Georgia'
         }

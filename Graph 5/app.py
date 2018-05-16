@@ -28,7 +28,7 @@ outcomes = ['% less than High School diploma', '% with College Degree', '% with 
 # Organize where items will be on the page
 app.layout = html.Div([
     html.H3(
-        children='Distribution of Immigrant Generation Nationally by Age groups, 1994-2016',
+        children='Differences in Educational Attainment across First Generation Hispanic Immigrants by Age at Arrival, 1994-2016',
         style={
             'textAlign': 'center', 'fontFamily': 'Georgia'
         }
