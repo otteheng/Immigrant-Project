@@ -43,7 +43,7 @@ app.layout = html.Div([
                                 id='state-id1',
                                 options=[{'label': i, 'value': i} for i in states],
                                 value='National')
-                            ],style={'width': '40%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),        
+                            ],style={'width': '35%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),        
                         html.Div([
                             html.Div([html.P('Select Outcome',id='outcome-title1')],
                                 style={'textAlign': 'center', 'fontFamily': 'Georgia'}),
@@ -51,7 +51,7 @@ app.layout = html.Div([
                                 id='outcome-id1',
                                 options=[{'label': i, 'value': i} for i in outcomes],
                                 value='% Employed')
-                            ],style={'width': '40%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),
+                            ],style={'width': '55%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),
                         ]),
 
                 dcc.Graph(id='indicator-graphic1',
@@ -68,7 +68,7 @@ app.layout = html.Div([
                                 id='state-id2',
                                 options=[{'label': i, 'value': i} for i in states],
                                 value='National')
-                            ],style={'width': '40%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),        
+                            ],style={'width': '35%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),        
                         html.Div([
                             html.Div([html.P('Select Outcome',id='outcome-title2')],
                                 style={'textAlign': 'center', 'fontFamily': 'Georgia'}),
@@ -76,7 +76,7 @@ app.layout = html.Div([
                                 id='outcome-id2',
                                 options=[{'label': i, 'value': i} for i in outcomes],
                                 value='Median Individual Real Income')
-                            ],style={'width': '40%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),
+                            ],style={'width': '55%','textAlign': 'center', 'fontFamily': 'Georgia', 'display': 'inline-block'}),
                         ]),
 
                 dcc.Graph(id='indicator-graphic2',

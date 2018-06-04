@@ -22,8 +22,9 @@ app.css.append_css({"external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
 # df = age
 df = pd.read_csv(
     'https://raw.githubusercontent.com/otteheng/Immigrant-Project/master/Graph%205/clean_national_first_age.csv')
+df.rename(columns={'% with College Degree': '% with College Degree or Higher'}, inplace=True)
 
-outcomes = ['% less than High School diploma', '% with College Degree', '% with Health Insurance', '% Employed', 'Median Individual Real Income']
+outcomes = ['% less than High School diploma', '% with College Degree or Higher', '% with Health Insurance', '% Employed', 'Median Individual Real Income']
 
 # Organize where items will be on the page
 app.layout = html.Div([
